@@ -151,7 +151,7 @@ async def calculate_end_time(
         return end_time
         
 
-async def compile_quant_data(
+def compile_quant_data(
     workout_stats_summary: dict, workout_stats_detail: dict, user_profile: dict, user_settings: dict
 ) -> list[PelotonStat]:
     """Compiles list of quantative data."""
@@ -166,9 +166,9 @@ async def compile_quant_data(
 
     # Get Timezone
     user_timezone = (
-        await dt_util.async_get_time_zone(raw_tz)
+        tz.gettz(raw_tz)
         if (raw_tz := workout_stats_summary.get("timezone"))
-        else await dt_util.async_get_time_zone("UTC")
+        else tz.gettz("UTC")
     )
 
     start_time: datetime.datetime | None = (
